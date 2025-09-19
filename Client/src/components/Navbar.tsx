@@ -11,12 +11,12 @@ function Navbar() {
   };
 
   return (
-    <nav className="sticky top-0 z-50 bg-blue-50 border-b border-blue-200">
-      <div className="px-4">
+    <nav className="sticky top-0 z-50 w-full bg-blue-50 border-b border-blue-200">
+      <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
           <Link
             to="/"
-            className="flex items-center gap-2 sm:gap-3"
+            className="flex items-center gap-2 sm:gap-3 flex-shrink-0"
             aria-label="EcoDrip home"
           >
             <img
@@ -24,31 +24,34 @@ function Navbar() {
               alt="EcoDrip logo"
               className="h-8 w-8 sm:h-9 sm:w-9 md:h-10 md:w-10"
             />
-            <span className="text-lg sm:text-xl font-semibold text-gray-900">
+            <span className="text-lg sm:text-xl font-semibold text-gray-900 hidden xs:block">
               EcoDrip
             </span>
           </Link>
 
           {isAuthenticated && user && (
-            <div className="flex items-center gap-6">
-              <div className="flex items-center gap-2.5 text-base font-semibold text-slate-800">
+            <div className="flex flex-col sm:flex-row items-end sm:items-center gap-2 sm:gap-6 ml-4">
+              <div className="hidden md:flex items-center gap-2.5 text-sm md:text-base font-semibold text-slate-800">
                 <User size={18} className="text-blue-500" />
-                <span className="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
-                  Welcome, {user.firstName} {user.lastName}
+                <span className="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent whitespace-nowrap">
+                  Welcome, {user.firstName}
                 </span>
               </div>
-              
-              <div className="flex items-center gap-2">
-                <nav className="flex items-center gap-2">
+
+              <div className="flex items-center gap-1 sm:gap-2">
+                <nav className="flex items-center gap-1 sm:gap-2">
                   <NavbarItem to="/dashboard" icon={LayoutDashboard}>
-                    Dashboard
+                    <span className="hidden sm:inline">Dashboard</span>
+                    <span className="sm:hidden">Dash</span>
                   </NavbarItem>
                   <NavbarItem to="/maps/new" icon={Upload}>
-                    Upload Map
+                    <span className="hidden sm:inline">Upload Map</span>
+                    <span className="sm:hidden">Upload</span>
                   </NavbarItem>
                 </nav>
                 <NavbarItem onClick={handleLogout} icon={LogOut} type="button">
-                  Logout
+                  <span className="hidden sm:inline">Logout</span>
+                  <span className="sm:hidden sr-only">Logout</span>
                 </NavbarItem>
               </div>
             </div>
