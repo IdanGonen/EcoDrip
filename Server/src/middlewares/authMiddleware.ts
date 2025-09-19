@@ -20,15 +20,10 @@ export const authenticateUser = async (
   next: NextFunction,
 ) => {
   try {
-    console.log('Request method:', req.method);
-    console.log('Request body:', req.body);
-    console.log('Request query:', req.query);
-    console.log('Request headers:', req.headers['content-type']);
-
     // For GET requests, check query parameters
     // For POST/PUT/DELETE requests, check body (including ownerId for file uploads)
     let userId: string | undefined;
-    
+
     if (req.method === 'GET') {
       userId = req.query.userId as string;
     } else {

@@ -19,18 +19,12 @@ function Dashboard() {
   const fetchUserMaps = async () => {
     try {
       setLoading(true);
-      console.log("User object:", user);
-      console.log("User ID:", user?.id);
-      
+
       if (!user?.id) {
-        console.log("No user ID found, returning early");
         return;
       }
 
-      console.log("Making API call to:", `/maps?userId=${user.id}`);
       const response = await api.get<MapImage[]>(`/maps?userId=${user.id}`);
-
-      console.log(response);
 
       if (response.data.success && response.data.data) {
         setMaps(response.data.data);

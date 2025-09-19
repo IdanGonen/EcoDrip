@@ -65,12 +65,6 @@ function MapViewer() {
       if (response.data.success && response.data.data) {
         const map = response.data.data;
 
-        console.log(map);
-
-        console.log("Full response:", response);
-        console.log("Map data:", map);
-        console.log("Image URL:", map.imageUrl);
-
         if (!map.imageUrl) {
           setError("No image URL found for this map");
           setLoading(false);

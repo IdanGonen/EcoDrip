@@ -90,12 +90,10 @@ export const getUserMaps = async (req: Request, res: Response) => {
     });
 
     // Transform the data to include full image URLs
-    const mapsWithImageUrls = maps.map(map => ({
+    const mapsWithImageUrls = maps.map((map) => ({
       ...map,
       imageUrl: `${req.protocol}://${req.get('host')}/${map.imagePath}`,
     }));
-
-    console.log(mapsWithImageUrls);
 
     return res.status(200).json({
       success: true,
@@ -139,8 +137,6 @@ export const getMapById = async (req: Request, res: Response) => {
       ...map,
       imageUrl: `${req.protocol}://${req.get('host')}/${map.imagePath}`,
     };
-
-    console.log('Map found, image path:', map.imagePath);
 
     return res.status(200).json({
       success: true,
@@ -238,7 +234,6 @@ export const deleteMap = async (req: Request, res: Response) => {
     try {
       const fullPath = path.join(__dirname, '../../', mapToDelete.imagePath);
       await fs.unlink(fullPath);
-      console.log(`Deleted file: ${fullPath}`);
     } catch (fileError) {
       console.error(`Error deleting file ${mapToDelete.imagePath}:`, fileError);
       // Don't fail the request if file deletion fails, as the database record is already deleted
