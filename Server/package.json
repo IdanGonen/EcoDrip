@@ -40,8 +40,11 @@
     "@prisma/client": "^6.13.0",
     "@types/bcrypt": "^6.0.0",
     "@types/cors": "^2.8.19",
+    "@types/uuid": "^10.0.0",
     "bcrypt": "^6.0.0",
     "cors": "^2.8.5",
-    "prisma": "^6.13.0"
+    "multer": "^2.0.2",
+    "prisma": "^6.13.0",
+    "uuid": "^13.0.0"
   }
 }

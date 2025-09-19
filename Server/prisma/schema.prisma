@@ -3,30 +3,49 @@ generator client {
 }
 
 datasource db {
-  provider  = "postgresql"
-  url       = env("DATABASE_URL")
-  directUrl = env("DIRECT_URL")
-}
-
-model Map {
-  map_key String  @id @default(cuid())
-  base64  String
-  height  Double
-  width   Double
-  user    User?   @relation(fields: [userId], references: [id])
-  userId  String?
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+  // directUrl = env("DIRECT_URL")
 }
 
 model User {
-  id        String   @id @default(cuid())
+  id        String     @id @default(cuid())
   firstName String
   lastName  String
-  email     String   @unique
+  email     String     @unique
   password  String
-  isAdmin   Boolean  @default(false)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  maps      Map[]
+  isAdmin   Boolean    @default(false)
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  maps      MapImage[]
 
   @@map("users")
+}
+
+model MapImage {
+  id          String      @id @default(cuid())
+  title       String
+  description String?
+  imagePath   String
+  uploadedAt  DateTime    @default(now())
+  ownerId     String
+  owner       User        @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+  sprinklers  Sprinkler[]
+
+  @@map("map_images")
+}
+
+model Sprinkler {
+  id        String   @id @default(cuid())
+  mapId     String
+  map       MapImage @relation(fields: [mapId], references: [id], onDelete: Cascade)
+  label     String?
+  xRatio    Float
+  yRatio    Float
+  active    Boolean  @default(true)
+  flowRate  Float?
+  metadata  Json?
+  createdAt DateTime @default(now())
+
+  @@map("sprinklers")
 }

@@ -5,6 +5,9 @@ import Navbar from "./components/Navbar";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Home from "./pages/Home";
+import Dashboard from "./pages/Dashboard";
+import MapUpload from "./pages/MapUpload";
+import MapViewer from "./pages/MapViewer";
 
 // Protected Route Component
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
@@ -54,6 +57,30 @@ function AppContent() {
           element={
             <ProtectedRoute>
               <Home />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/dashboard"
+          element={
+            <ProtectedRoute>
+              <Dashboard />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/maps/new"
+          element={
+            <ProtectedRoute>
+              <MapUpload />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/maps/:id"
+          element={
+            <ProtectedRoute>
+              <MapViewer />
             </ProtectedRoute>
           }
         />

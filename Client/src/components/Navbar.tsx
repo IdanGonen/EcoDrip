@@ -29,6 +29,20 @@ function Navbar() {
 
           {isAuthenticated && user && (
             <div className="flex items-center gap-4">
+              <nav className="flex items-center gap-2">
+                <Link
+                  to="/dashboard"
+                  className="px-3 py-1 text-sm text-blue-600 hover:text-blue-700 hover:bg-blue-50 rounded-md transition-colors"
+                >
+                  Dashboard
+                </Link>
+                <Link
+                  to="/maps/new"
+                  className="px-3 py-1 text-sm text-green-600 hover:text-green-700 hover:bg-green-50 rounded-md transition-colors"
+                >
+                  Upload Map
+                </Link>
+              </nav>
               <span className="text-sm text-gray-700">
                 Welcome, {user.firstName} {user.lastName}
               </span>
