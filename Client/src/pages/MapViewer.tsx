@@ -138,9 +138,36 @@ function MapViewer() {
 
       // Draw label if exists
       if (sprinkler.label) {
-        ctx.fillStyle = "#000000";
         ctx.font = "12px Arial";
         ctx.textAlign = "center";
+        
+        // Measure text to create background
+        const textMetrics = ctx.measureText(sprinkler.label);
+        const textWidth = textMetrics.width;
+        const textHeight = 14; // Approximate text height
+        const padding = 4;
+        
+        // Draw background rectangle
+        ctx.fillStyle = "rgba(255, 255, 255, 0.9)";
+        ctx.fillRect(
+          x - textWidth / 2 - padding,
+          y - 20 - textHeight + 2,
+          textWidth + padding * 2,
+          textHeight + padding
+        );
+        
+        // Draw border around background
+        ctx.strokeStyle = "rgba(0, 0, 0, 0.3)";
+        ctx.lineWidth = 1;
+        ctx.strokeRect(
+          x - textWidth / 2 - padding,
+          y - 20 - textHeight + 2,
+          textWidth + padding * 2,
+          textHeight + padding
+        );
+        
+        // Draw text
+        ctx.fillStyle = "#000000";
         ctx.fillText(sprinkler.label, x, y - 20);
       }
     });
