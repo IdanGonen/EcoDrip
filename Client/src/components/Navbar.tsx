@@ -1,5 +1,7 @@
 import { Link } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
+import { LayoutDashboard, Upload, LogOut, User } from "lucide-react";
+import NavbarItem from "./NavbarItem";
 
 function Navbar() {
   const { user, logout, isAuthenticated } = useAuth();
@@ -28,30 +30,27 @@ function Navbar() {
           </Link>
 
           {isAuthenticated && user && (
-            <div className="flex items-center gap-4">
-              <nav className="flex items-center gap-2">
-                <Link
-                  to="/dashboard"
-                  className="px-3 py-1 text-sm text-blue-600 hover:text-blue-700 hover:bg-blue-50 rounded-md transition-colors"
-                >
-                  Dashboard
-                </Link>
-                <Link
-                  to="/maps/new"
-                  className="px-3 py-1 text-sm text-green-600 hover:text-green-700 hover:bg-green-50 rounded-md transition-colors"
-                >
-                  Upload Map
-                </Link>
-              </nav>
-              <span className="text-sm text-gray-700">
-                Welcome, {user.firstName} {user.lastName}
-              </span>
-              <button
-                onClick={handleLogout}
-                className="px-3 py-1 text-sm text-red-600 hover:text-red-700 hover:bg-red-50 rounded-md transition-colors cursor-pointer"
-              >
-                Logout
-              </button>
+            <div className="flex items-center gap-6">
+              <div className="flex items-center gap-2.5 text-base font-semibold text-slate-800">
+                <User size={18} className="text-blue-500" />
+                <span className="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
+                  Welcome, {user.firstName} {user.lastName}
+                </span>
+              </div>
+              
+              <div className="flex items-center gap-2">
+                <nav className="flex items-center gap-2">
+                  <NavbarItem to="/dashboard" icon={LayoutDashboard}>
+                    Dashboard
+                  </NavbarItem>
+                  <NavbarItem to="/maps/new" icon={Upload}>
+                    Upload Map
+                  </NavbarItem>
+                </nav>
+                <NavbarItem onClick={handleLogout} icon={LogOut} type="button">
+                  Logout
+                </NavbarItem>
+              </div>
             </div>
           )}
         </div>
