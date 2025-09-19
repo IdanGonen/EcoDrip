@@ -8,6 +8,7 @@ import type {
   SprinklerCreateData,
   SprinklerUpdateData,
 } from "../services/api";
+import { showConfirm, showError, showSuccess } from "../utils/alerts";
 
 interface SprinklerFormData {
   label: string;
@@ -194,12 +195,13 @@ function MapViewer() {
       if (response.data.success) {
         await fetchMapData(); // Refresh data
         setIsAddingMode(false);
+        await showSuccess("Sprinkler Added!", "Sprinkler has been added successfully.");
       } else {
-        alert(response.data.message || "Failed to add sprinkler");
+        await showError("Add Failed", response.data.message || "Failed to add sprinkler");
       }
     } catch (err) {
       console.error("Error adding sprinkler:", err);
-      alert("Failed to add sprinkler");
+      await showError("Add Failed", "Failed to add sprinkler");
     }
   }
 
@@ -235,19 +237,28 @@ function MapViewer() {
         await fetchMapData();
         setShowSprinklerModal(false);
         setSelectedSprinkler(null);
+        await showSuccess("Updated!", "Sprinkler has been updated successfully.");
       } else {
-        alert(response.data.message || "Failed to update sprinkler");
+        await showError("Update Failed", response.data.message || "Failed to update sprinkler");
       }
     } catch (err) {
       console.error("Error updating sprinkler:", err);
-      alert("Failed to update sprinkler");
+      await showError("Update Failed", "Failed to update sprinkler");
     }
   };
 
   const handleSprinklerDelete = async () => {
     if (!selectedSprinkler || !user?.id) return;
 
-    if (!confirm("Are you sure you want to delete this sprinkler?")) return;
+    const result = await showConfirm({
+      title: "Delete Sprinkler?",
+      text: "Are you sure you want to delete this sprinkler?",
+      icon: "warning",
+      confirmButtonText: "Yes, delete it!",
+      cancelButtonText: "Cancel"
+    });
+
+    if (!result.isConfirmed) return;
 
     try {
       const response = await api.delete<void>(
@@ -261,12 +272,13 @@ function MapViewer() {
         await fetchMapData();
         setShowSprinklerModal(false);
         setSelectedSprinkler(null);
+        await showSuccess("Deleted!", "Sprinkler has been deleted successfully.");
       } else {
-        alert(response.data.message || "Failed to delete sprinkler");
+        await showError("Delete Failed", response.data.message || "Failed to delete sprinkler");
       }
     } catch (err) {
       console.error("Error deleting sprinkler:", err);
-      alert("Failed to delete sprinkler");
+      await showError("Delete Failed", "Failed to delete sprinkler");
     }
   };
 

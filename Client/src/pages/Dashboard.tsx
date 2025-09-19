@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
 import { api } from "../services/api";
 import type { MapImage } from "../services/api";
+import { showConfirm, showError, showSuccess } from "../utils/alerts";
 
 function Dashboard() {
   const { user } = useAuth();
@@ -40,11 +41,15 @@ function Dashboard() {
   };
 
   const handleDeleteMap = async (mapId: string) => {
-    if (
-      !confirm(
-        "Are you sure you want to delete this map? This will also delete all sprinklers on this map."
-      )
-    ) {
+    const result = await showConfirm({
+      title: "Delete Map?",
+      text: "Are you sure you want to delete this map? This will also delete all sprinklers on this map.",
+      icon: "warning",
+      confirmButtonText: "Yes, delete it!",
+      cancelButtonText: "Cancel"
+    });
+
+    if (!result.isConfirmed) {
       return;
     }
 
@@ -57,12 +62,13 @@ function Dashboard() {
 
       if (response.data.success) {
         setMaps(maps.filter((map) => map.id !== mapId));
+        await showSuccess("Deleted!", "Map has been deleted successfully.");
       } else {
-        alert(response.data.message || "Failed to delete map");
+        await showError("Delete Failed", response.data.message || "Failed to delete map");
       }
     } catch (err) {
       console.error("Error deleting map:", err);
-      alert("Failed to delete map");
+      await showError("Delete Failed", "Failed to delete map");
     }
   };
 
