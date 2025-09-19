@@ -22,9 +22,9 @@ function Navbar() {
             <img
               src="/Logo.png"
               alt="EcoDrip logo"
-              className="h-8 w-8 sm:h-9 sm:w-9 md:h-10 md:w-10"
+              className="h-10 w-10 sm:h-12 sm:w-12 md:h-14 md:w-14"
             />
-            <span className="text-lg sm:text-xl font-semibold text-gray-900 hidden xs:block">
+            <span className="text-lg sm:text-xl font-semibold text-gray-900">
               EcoDrip
             </span>
           </Link>
